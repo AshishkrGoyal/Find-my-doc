@@ -5,5 +5,7 @@ const router = express.Router();
 
 router.get('/',function (req, res, next) {
   res.json("Ashishkr");
-  next();
-})
+  //next();
+});
+
+module.exports = router;
