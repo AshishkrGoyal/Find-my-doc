@@ -4,8 +4,9 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const ejs = require('ejs');
 const engine = require('ejs-mate');
-const MongoStore = require('express-session')(session);
+//const MongoStore = require('express-session')(session);
 const router = require('./routes/main');
+const admin = require('./routes/admin');
 const logger = require('morgan');
 
 const config = require('./config/secret');
@@ -14,14 +15,15 @@ const config = require('./config/secret');
 const app = express();
 /*const port = 8000||process.env.port;*/
 app.use('/test-app', router);
-app.use(express.static(__dirname+ 'public'));
+app.use('/admin',admin);
+app.use(express.static(__dirname+ '/public'));
 
 
 app.use(logger('dev'));
 app.set('view engine','ejs');
-app.set('ejs', engine);
+app.engine('ejs', engine);
 
-app.set('views',__dirname+'./views');
+app.set('views',__dirname + '/views');
 
 
 
@@ -36,16 +38,7 @@ app.use(session({
   secret: config.key
 }));
 
-/*app.listen(config.port, function (err) {
-  if(err)
-  {
-    console.log(err);
-  }
-  else
-  {
-    console.log("app is running on port: "+8000);
-  }
-});*/
+
 
 
 app.listen((config.port), function (err) {
